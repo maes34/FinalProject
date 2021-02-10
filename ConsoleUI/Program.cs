@@ -26,13 +26,22 @@ namespace ConsoleUI
         private static void ProductTest()
         {
             ProductManager productManager = new ProductManager(new EfProductDal());
+            var result = productManager.GetProductDetails();
 
-            foreach (var x in productManager.GetProductDetails())
+            if (result.Success)
             {
-                Console.WriteLine("Ürün Adı : " + x.ProductName);
-                Console.WriteLine("Kategori : " + x.CategoryName);
-                Console.WriteLine("---------------------------");
+                foreach (var x in result.Data)
+                {
+                    Console.WriteLine("Ürün Adı : " + x.ProductName + " / " + "Kategori : " + x.CategoryName);
+                    Console.WriteLine("---------------------------");
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
+           
         }
     }
 }
